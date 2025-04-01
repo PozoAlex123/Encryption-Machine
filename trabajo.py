@@ -19,9 +19,11 @@ def main(page:ft.Page):
             'k': '-.-', 'l': '.-..', 'm': '--', 'n': '-.', 'o': '---',
             'p': '.--.', 'q': '--.-', 'r': '.-.', 's': '...', 't': '-',
             'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-', 'y': '-.--',
-            'z': '--..'}
-        
-        return letras_morse
+            'z': '--..', " ":"", "":""}
+        outputdemensaje.value = ""
+        for letra in dondevaelmensaje.value:
+            outputdemensaje.value+=letras_morse[letra] + "/"
+        page.update()
 
     def numeros():
         numeros_letras = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 
@@ -32,8 +34,15 @@ def main(page:ft.Page):
                         26: 'z'}
         return numeros_letras
     
+    def crossroads(e):
+        match(Porfin.value):
+            case "Morse":
+                morse()
+            case "Letras - Numeros":
+                numeros()
+
     def copiaralclipboard():
-        pass
+        pyperclip.copy(outputdemensaje.value)
 
     dondevaelmensaje = ft.TextField(label="Mucho Pene", width=400, bgcolor=ft.colors.GREY, color = ft.colors.BLUE)
     outputdemensaje = ft.TextField(label="Encryped text:", read_only=True, bgcolor=ft.colors.GREY, color = ft.colors.BLUE)
@@ -49,7 +58,7 @@ def main(page:ft.Page):
         ],
     )
 
-    boton1 = ft.ElevatedButton("Encriptar", style=ft.ButtonStyle(bgcolor=ft.colors.GREY,color=ft.colors.WHITE))
+    boton1 = ft.ElevatedButton("Encriptar", style=ft.ButtonStyle(bgcolor=ft.colors.GREY,color=ft.colors.WHITE), on_click=crossroads)
     boton2 = ft.ElevatedButton("Copiar al Clipboard" , on_click=copiaralclipboard, style=ft.ButtonStyle(bgcolor=ft.colors.GREY,color=ft.colors.WHITE))
     
     output_text = ft.Text("Selecciona un Encryption")
